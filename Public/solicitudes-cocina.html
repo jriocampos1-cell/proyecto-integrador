@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mis solicitudes — ParviPan</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css"/>
+  <link rel="stylesheet" href="css/parvipan.css"/>
+</head>
+<body>
+
+<header class="pp-topbar">
+  <button id="pp-sidebar-toggle" class="d-md-none pp-btn pp-btn-secondary" style="padding:6px 10px">
+    <i class="ti ti-menu-2"></i>
+  </button>
+  <a href="dashboard-cocina.html" class="pp-topbar-brand">
+    <div class="pp-logo"><i class="ti ti-bread"></i></div>
+    ParviPan
+  </a>
+  <div class="pp-topbar-right">
+    <div class="pp-user-chip">
+      <div class="pp-avatar" style="background:#EAF3DE;color:#2C5F2E">CR</div>
+      <span>Carlos Ruiz</span>
+      <span class="pp-role pp-role-cocinero ms-1">Cocinero</span>
+    </div>
+    <button class="pp-btn pp-btn-secondary pp-btn-sm" data-action="logout">
+      <i class="ti ti-logout"></i> Salir
+    </button>
+  </div>
+</header>
+
+<nav class="pp-sidebar">
+  <a href="dashboard-cocina.html" class="pp-nav-link"><i class="ti ti-home"></i> Inicio</a>
+  <a href="solicitudes-cocina.html" class="pp-nav-link active"><i class="ti ti-clipboard-list"></i> Mis solicitudes</a>
+  <div class="pp-sidebar-footer">
+    <button class="pp-nav-link w-100" data-action="logout"><i class="ti ti-logout"></i> Cerrar sesión</button>
+  </div>
+</nav>
+
+<main class="pp-main">
+
+  <!-- Formulario de nueva solicitud -->
+  <div class="pp-page-header">
+    <h1 class="pp-page-title">Nueva solicitud</h1>
+    <p class="pp-page-sub">Selecciona el insumo y la cantidad que necesitas</p>
+  </div>
+
+  <div class="pp-card mb-4">
+    <form id="form-solicitud" novalidate>
+
+      <div class="pp-form-group">
+        <label class="pp-form-label" for="sel-insumo">Insumo *</label>
+        <select class="pp-select" id="sel-insumo" required>
+          <option value="">— Seleccionar insumo —</option>
+          <option value="harina"      data-stock="12">Harina de trigo — stock: 12 kg</option>
+          <option value="azucar"      data-stock="30">Azúcar blanca — stock: 30 kg</option>
+          <option value="levadura"    data-stock="2" >Levadura — stock: 2 kg</option>
+          <option value="mantequilla" data-stock="5" >Mantequilla — stock: 5 bloques</option>
+          <option value="frutas"      data-stock="8" >Frutas frescas — stock: 8 kg</option>
+        </select>
+      </div>
+
+      <div class="pp-form-group">
+        <label class="pp-form-label">Cantidad *</label>
+        <div class="d-flex gap-3 align-center">
+          <div class="pp-qty-stepper">
+            <button type="button" class="btn-minus" aria-label="Disminuir cantidad">−</button>
+            <input type="number" id="inp-cantidad" value="1" min="1" max="9999" required aria-label="Cantidad"/>
+            <button type="button" class="btn-plus" aria-label="Aumentar cantidad">+</button>
+          </div>
+          <select class="pp-select" style="width:110px">
+            <option>kg</option>
+            <option>litros</option>
+            <option>unidades</option>
+            <option>bloques</option>
+          </select>
+        </div>
+        <p id="stock-info" class="text-muted text-sm mt-1"></p>
+      </div>
+
+      <div class="pp-form-group">
+        <label class="pp-form-label" for="sel-turno">Turno</label>
+        <select class="pp-select" id="sel-turno">
+          <option>Mañana</option>
+          <option>Tarde</option>
+          <option>Noche</option>
+          <option>Urgente</option>
+        </select>
+      </div>
+
+      <button class="pp-btn pp-btn-primary pp-btn-full pp-btn-lg mt-2" type="submit">
+        <i class="ti ti-send"></i> Enviar solicitud
+      </button>
+    </form>
+  </div>
+
+  <!-- Historial propio -->
+  <h2 style="font-size:15px;font-weight:600;margin-bottom:12px">Mis solicitudes recientes</h2>
+
+  <div class="pp-card" style="padding:0;overflow:hidden">
+    <table class="pp-table">
+      <thead>
+        <tr>
+          <th>Insumo</th>
+          <th>Cantidad</th>
+          <th>Turno</th>
+          <th>Fecha</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Harina de trigo</td>
+          <td>20 kg</td>
+          <td>Mañana</td>
+          <td>06 jun 2026</td>
+          <td><span class="pp-badge pp-badge-success">Aprobada</span></td>
+        </tr>
+        <tr>
+          <td>Levadura</td>
+          <td>10 kg</td>
+          <td>Tarde</td>
+          <td>06 jun 2026</td>
+          <td><span class="pp-badge pp-badge-warning">Pendiente</span></td>
+        </tr>
+        <tr>
+          <td>Mantequilla</td>
+          <td>5 bloques</td>
+          <td>Urgente</td>
+          <td>05 jun 2026</td>
+          <td>
+            <span class="pp-badge pp-badge-danger">Rechazada</span>
+            <p class="text-muted text-sm mt-1">Motivo: stock insuficiente</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<script>
+  /* Mostrar stock disponible al seleccionar insumo */
+  document.getElementById("sel-insumo").addEventListener("change", function() {
+    const opt = this.selectedOptions[0];
+    const info = document.getElementById("stock-info");
+    if (opt && opt.dataset.stock) {
+      info.textContent = `Stock disponible: ${opt.dataset.stock} unidades`;
+    } else {
+      info.textContent = "";
+    }
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/parvipan.js"></script>
+</body>
+</html>
