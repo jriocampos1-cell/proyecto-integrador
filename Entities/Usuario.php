@@ -10,12 +10,12 @@ class Usuario
     private $eEstado;
     private $cCorreo;
 
-    public function __construct($nUsuarioID=null, $cNombre = null, $cNombreUsuario = null, $cContraseña= null, $eRol= null, $eEstado= null, $cCorreo= null
+    public function __construct($nUsuarioID=null, $cNombre = null, $cNombreUsuario = null, $cContraseñaUsuario= null, $eRol= null, $eEstado= null, $cCorreo= null
     ) {
         $this->nUsuarioID = $nUsuarioID;
         $this->cNombre = $cNombre;
         $this->cNombreUsuario = $cNombreUsuario;
-        $this->cContraseñaUsuario = $cContraseña;
+        $this->cContraseñaUsuario = $cContraseñaUsuario;
         $this->eRol = $eRol;
         $this->eEstado = $eEstado;
         $this->cCorreo  = $cCorreo;
