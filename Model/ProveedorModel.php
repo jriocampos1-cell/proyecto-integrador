@@ -1,6 +1,6 @@
 <?php
-require_once "Core/BaseDatos.php";
-require_once "Entities/Proveedor.php";
+require_once __DIR__ . '/../Core/BaseDatos.php';
+require_once __DIR__ . '/../Entities/Proveedor.php';
 
 class ProveedorModel extends Conectar {
 
@@ -78,7 +78,31 @@ class ProveedorModel extends Conectar {
     }
 
  
-    public function create(Proveedor $proveedor) {
+
+    public function findAllView() {
+        try {
+            $sql = "SELECT nProveedorID, cNombre, cTelefono, cCorreo, eEstado FROM TProveedores ORDER BY cNombre";
+            $consulta = $this->conexion->prepare($sql);
+            $consulta->execute();
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function findByIdView($id) {
+        try {
+            $sql = "SELECT nProveedorID, cNombre, cTelefono, cCorreo, eEstado FROM TProveedores WHERE nProveedorID = :id";
+            $sentencia = $this->conexion->prepare($sql);
+            $sentencia->bindParam(':id', $id);
+            $sentencia->execute();
+            return $sentencia->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+        public function create(Proveedor $proveedor) {
         try {
             $sql = "INSERT INTO TProveedores (cNombre, cTelefono, cCorreo, eEstado) 
                     VALUES (:nombre, :telefono, :correo, :estado)";

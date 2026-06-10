@@ -1,6 +1,6 @@
 <?php
-require_once "Core/BaseDatos.php";
-require_once "Entities/Insumo.php";
+require_once __DIR__ . '/../Core/BaseDatos.php';
+require_once __DIR__ . '/../Entities/Insumo.php';
 
 class InsumoModel extends Conectar {
 
@@ -56,7 +56,31 @@ class InsumoModel extends Conectar {
     }
 
    
-    public function create(Insumo $insumo) {
+
+    public function findAllView() {
+        try {
+            $sql = "SELECT nInsumoID, cNombre, cCategoria, eUnidadMedida, nStockActual, nStockMinimo FROM TInsumos ORDER BY cCategoria, cNombre";
+            $consulta = $this->conexion->prepare($sql);
+            $consulta->execute();
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function findByIdView($id) {
+        try {
+            $sql = "SELECT nInsumoID, cNombre, cCategoria, eUnidadMedida, nStockActual, nStockMinimo FROM TInsumos WHERE nInsumoID = :id";
+            $sentencia = $this->conexion->prepare($sql);
+            $sentencia->bindParam(':id', $id);
+            $sentencia->execute();
+            return $sentencia->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+        public function create(Insumo $insumo) {
         try {
             $sql = "INSERT INTO TInsumos (cNombre, cCategoria, eUnidadMedida, nStockMinimo) 
                     VALUES (:nombre, :categoria, :unidad, :stockMin)";

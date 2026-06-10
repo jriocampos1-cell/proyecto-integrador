@@ -19,6 +19,7 @@ ob_start();
         'Movimientos' => 'movimientos.php',
         'Solicitudes' => 'solicitudes.php',
         'Alertas' => 'alertas.php',
+        'Dashboard de datos' => 'dashboard.php',
         'Semáforo de stock' => 'semaforo_stock.php',
         'Inventario FEFO' => 'inventario_fefo.php',
         'Análisis de mermas' => 'analisis_mermas.php',

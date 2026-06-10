@@ -1,6 +1,6 @@
 <?php
-require_once "Core/BaseDatos.php";
-require_once "Entities/Movimiento.php";
+require_once __DIR__ . '/../Core/BaseDatos.php';
+require_once __DIR__ . '/../Entities/Movimiento.php';
 
 class MovimientoModel extends Conectar{
     public function __construct(){
@@ -23,7 +23,31 @@ class MovimientoModel extends Conectar{
         }
     }
 
-    public function create(Movimiento $movimiento){
+
+    public function findAllView() {
+        try {
+            $sql = "SELECT m.nMovimientoID, i.cNombre AS cInsumo, m.eTipo, m.eMotivoSalida, m.nCantidad, u.cNombre AS cUsuario, p.cNombre AS cProveedor, s.eEstado AS eSolicitud, m.dFecha FROM TMovimientos m LEFT JOIN TInsumos i ON m.nInsumoID = i.nInsumoID LEFT JOIN TUsuarios u ON m.nUsuarioID = u.nUsuarioID LEFT JOIN TProveedores p ON m.nProveedorID = p.nProveedorID LEFT JOIN TSolicitud s ON m.nSolicitudID = s.nSolicitudID ORDER BY m.dFecha DESC";
+            $consulta = $this->conexion->prepare($sql);
+            $consulta->execute();
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function findByIdView($id) {
+        try {
+            $sql = "SELECT m.nMovimientoID, i.cNombre AS cInsumo, m.eTipo, m.eMotivoSalida, m.nCantidad, u.cNombre AS cUsuario, p.cNombre AS cProveedor, s.eEstado AS eSolicitud, m.dFecha FROM TMovimientos m LEFT JOIN TInsumos i ON m.nInsumoID = i.nInsumoID LEFT JOIN TUsuarios u ON m.nUsuarioID = u.nUsuarioID LEFT JOIN TProveedores p ON m.nProveedorID = p.nProveedorID LEFT JOIN TSolicitud s ON m.nSolicitudID = s.nSolicitudID WHERE m.nMovimientoID = :id";
+            $sentencia = $this->conexion->prepare($sql);
+            $sentencia->bindParam(':id', $id);
+            $sentencia->execute();
+            return $sentencia->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+        public function create(Movimiento $movimiento){
         try{
             $sql = "INSERT INTO TMovimientos (nInsumoID, nLoteID, nUsuarioID, nProveedorID, nSolicitudID, nCantidad, eTipo, eMotivoSalida) 
                     VALUES (:insumoID, :loteID, :usuarioID, :proveedorID, :solicitudID, :cantidad, :tipo, :motivo)";

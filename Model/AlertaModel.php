@@ -1,6 +1,6 @@
 <?php
-require_once "Core/BaseDatos.php";
-require_once "Entities/Alerta.php";
+require_once __DIR__ . '/../Core/BaseDatos.php';
+require_once __DIR__ . '/../Entities/Alerta.php';
 
 class AlertaModel extends Conectar {
 
@@ -59,7 +59,31 @@ class AlertaModel extends Conectar {
     }
 
     
-    public function atenderAlerta($id) {
+
+    public function findAllView() {
+        try {
+            $sql = "SELECT a.nAlertaID, i.cNombre AS cInsumo, l.cCodigoLote, a.eTipo, a.cMensaje, a.eEstado, a.dFecha FROM TAlerta a LEFT JOIN TInsumos i ON a.nInsumoID = i.nInsumoID LEFT JOIN TLotes l ON a.nLoteID = l.nLoteID ORDER BY a.dFecha DESC";
+            $consulta = $this->conexion->prepare($sql);
+            $consulta->execute();
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function findByIdView($id) {
+        try {
+            $sql = "SELECT a.nAlertaID, i.cNombre AS cInsumo, l.cCodigoLote, a.eTipo, a.cMensaje, a.eEstado, a.dFecha FROM TAlerta a LEFT JOIN TInsumos i ON a.nInsumoID = i.nInsumoID LEFT JOIN TLotes l ON a.nLoteID = l.nLoteID WHERE a.nAlertaID = :id";
+            $sentencia = $this->conexion->prepare($sql);
+            $sentencia->bindParam(':id', $id);
+            $sentencia->execute();
+            return $sentencia->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+        public function atenderAlerta($id) {
         try {
             $sql = "UPDATE TAlerta SET eEstado = 'atendida' WHERE nAlertaID = :id";
             $sentencia = $this->conexion->prepare($sql);

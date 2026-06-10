@@ -1,6 +1,6 @@
 <?php
-require_once "Core/BaseDatos.php";
-require_once "Entities/Lote.php";
+require_once __DIR__ . '/../Core/BaseDatos.php';
+require_once __DIR__ . '/../Entities/Lote.php';
 
 class LoteModel extends Conectar {
 
@@ -58,7 +58,31 @@ class LoteModel extends Conectar {
         }
     }
 
-    public function findByInsumoId($insumoID) {
+
+    public function findAllView() {
+        try {
+            $sql = "SELECT l.nLoteID, i.cNombre AS cInsumo, l.cCodigoLote, l.nCantidadActual, l.dFechaIngreso, l.dVencimiento FROM TLotes l JOIN TInsumos i ON l.nInsumoID = i.nInsumoID ORDER BY l.dFechaIngreso DESC";
+            $consulta = $this->conexion->prepare($sql);
+            $consulta->execute();
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function findByIdView($id) {
+        try {
+            $sql = "SELECT l.nLoteID, i.cNombre AS cInsumo, l.cCodigoLote, l.nCantidadActual, l.dFechaIngreso, l.dVencimiento FROM TLotes l JOIN TInsumos i ON l.nInsumoID = i.nInsumoID WHERE l.nLoteID = :id";
+            $sentencia = $this->conexion->prepare($sql);
+            $sentencia->bindParam(':id', $id);
+            $sentencia->execute();
+            return $sentencia->fetch(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+        public function findByInsumoId($insumoID) {
         try {
             $sql = "SELECT * FROM TLotes 
                     WHERE nInsumoID = :insumoID 

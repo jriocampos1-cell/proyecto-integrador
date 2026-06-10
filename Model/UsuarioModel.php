@@ -1,6 +1,6 @@
 <?php
-require_once "Core/BaseDatos.php";
-require_once "Entities/Usuario.php";
+require_once __DIR__ . '/../Core/BaseDatos.php';
+require_once __DIR__ . '/../Entities/Usuario.php';
 
 class UsuarioModel extends Conectar{
     public function __construct(){
@@ -39,7 +39,31 @@ class UsuarioModel extends Conectar{
         }
     }
 
-    public function create(Usuario $usuario){
+
+    public function findAllView(){
+        try{
+            $sql = "SELECT nUsuarioID, cNombre, cNombreUsuario, eRol, eEstado, cCorreo FROM TUsuarios ORDER BY nUsuarioID";
+            $consulta = $this->conexion->prepare($sql);
+            $consulta->execute();
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        }catch(Exception $e){
+            die($e->getMessage());
+        }
+    }
+
+    public function findByIdView($id){
+        try{
+            $sql = "SELECT nUsuarioID, cNombre, cNombreUsuario, eRol, eEstado, cCorreo FROM TUsuarios WHERE nUsuarioID = :id";
+            $sentencia = $this->conexion->prepare($sql);
+            $sentencia->bindParam(':id', $id);
+            $sentencia->execute();
+            return $sentencia->fetch(PDO::FETCH_ASSOC);
+        }catch(Exception $e){
+            die($e->getMessage());
+        }
+    }
+
+        public function create(Usuario $usuario){
         try{
             // Usamos el procedimiento almacenado seguro que definiste en tu BD
             $sql = "CALL sp_InsertarUsuario(:nombre, :nombreUsuario, :contrasena, :rol, :correo)";

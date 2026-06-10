@@ -1,6 +1,6 @@
 <?php
-require_once "Core/BaseDatos.php";
-require_once "Entities/Solicitud.php";
+require_once __DIR__ . '/../Core/BaseDatos.php';
+require_once __DIR__ . '/../Entities/Solicitud.php';
 
 class SolicitudModel extends Conectar{
     public function __construct(){
@@ -39,7 +39,31 @@ class SolicitudModel extends Conectar{
         }
     }
 
-    public function create(Solicitud $solicitud){
+
+    public function findAllView(){
+        try{
+            $sql = "SELECT s.nSolicitudID, u.cNombre AS cUsuario, s.eEstado, s.cMotivoRechazo, s.dFecha FROM TSolicitud s LEFT JOIN TUsuarios u ON s.nUsuarioID = u.nUsuarioID ORDER BY s.dFecha DESC";
+            $consulta = $this->conexion->prepare($sql);
+            $consulta->execute();
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        }catch(Exception $e){
+            die($e->getMessage());
+        }
+    }
+
+    public function findByIdView($id){
+        try{
+            $sql = "SELECT s.nSolicitudID, u.cNombre AS cUsuario, s.eEstado, s.cMotivoRechazo, s.dFecha FROM TSolicitud s LEFT JOIN TUsuarios u ON s.nUsuarioID = u.nUsuarioID WHERE s.nSolicitudID = :id";
+            $sentencia = $this->conexion->prepare($sql);
+            $sentencia->bindParam(':id', $id);
+            $sentencia->execute();
+            return $sentencia->fetch(PDO::FETCH_ASSOC);
+        }catch(Exception $e){
+            die($e->getMessage());
+        }
+    }
+
+        public function create(Solicitud $solicitud){
         try{
             $sql = "INSERT INTO TSolicitud (nUsuarioID, eEstado) VALUES (:usuarioID, :estado)";
             $sentencia = $this->conexion->prepare($sql);    
