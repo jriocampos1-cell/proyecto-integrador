@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Historial de movimientos — ParviPan</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css"/>
+  <link rel="stylesheet" href="css/parvipan.css"/>
+</head>
+<body>
+
+<header class="pp-topbar">
+  <button id="pp-sidebar-toggle" class="d-md-none pp-btn pp-btn-secondary" style="padding:6px 10px">
+    <i class="ti ti-menu-2"></i>
+  </button>
+  <a href="dashboard-gerencial.html" class="pp-topbar-brand">
+    <div class="pp-logo"><i class="ti ti-bread"></i></div>
+    ParviPan
+  </a>
+  <div class="pp-topbar-right">
+    <div class="pp-user-chip">
+      <div class="pp-avatar">LG</div>
+      <span>Laura Gerente</span>
+      <span class="pp-role pp-role-gerente ms-1">Gerente</span>
+    </div>
+    <button class="pp-btn pp-btn-secondary pp-btn-sm" data-action="logout">
+      <i class="ti ti-logout"></i> Salir
+    </button>
+  </div>
+</header>
+
+<nav class="pp-sidebar">
+  <a href="dashboard-gerencial.html" class="pp-nav-link"><i class="ti ti-chart-bar"></i> Resumen</a>
+  <a href="gestion-solicitudes.html" class="pp-nav-link"><i class="ti ti-clipboard-check"></i> Solicitudes</a>
+  <a href="historial.html" class="pp-nav-link active"><i class="ti ti-history"></i> Historial</a>
+  <a href="proveedores.html" class="pp-nav-link"><i class="ti ti-truck"></i> Proveedores</a>
+  <a href="usuarios.html" class="pp-nav-link"><i class="ti ti-users"></i> Usuarios</a>
+  <div class="pp-sidebar-footer">
+    <button class="pp-nav-link w-100" data-action="logout"><i class="ti ti-logout"></i> Cerrar sesión</button>
+  </div>
+</nav>
+
+<main class="pp-main">
+  <div class="pp-page-header d-flex justify-between align-center">
+    <div>
+      <h1 class="pp-page-title">Historial de movimientos</h1>
+      <p class="pp-page-sub">Trazabilidad completa — conforme INVIMA Res. 2674/2013</p>
+    </div>
+    <button class="pp-btn pp-btn-secondary pp-btn-sm">
+      <i class="ti ti-download"></i> Exportar PDF
+    </button>
+  </div>
+
+  <!-- Filtros -->
+  <div class="d-flex gap-3 mb-4" style="flex-wrap:wrap">
+    <select class="pp-select" style="width:160px" id="filtro-tipo">
+      <option value="">Todos los tipos</option>
+      <option value="entrada">Entradas</option>
+      <option value="salida">Salidas</option>
+      <option value="solicitud">Solicitudes</option>
+    </select>
+    <input type="text" class="pp-input" style="width:160px" placeholder="Insumo..." id="search-historial"/>
+    <select class="pp-select" style="width:160px" id="filtro-usuario">
+      <option value="">Todos los usuarios</option>
+      <option>Cocinero 1</option>
+      <option>Cocinero 2</option>
+      <option>Pastelero</option>
+      <option>Bodega</option>
+    </select>
+    <input type="date" class="pp-input" style="width:150px" id="filtro-desde"/>
+    <input type="date" class="pp-input" style="width:150px" id="filtro-hasta"/>
+  </div>
+
+  <div class="pp-card" style="padding:0;overflow:hidden">
+    <div class="pp-table-wrap">
+      <table class="pp-table" id="tabla-historial">
+        <thead>
+          <tr>
+            <th>Fecha y hora</th>
+            <th>Tipo</th>
+            <th>Insumo</th>
+            <th>N° Lote</th>
+            <th>Cantidad</th>
+            <th>Motivo / destino</th>
+            <th>Usuario</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-tipo="entrada">
+            <td>06 jun 2026 08:12</td>
+            <td><span class="pp-badge pp-badge-success">Entrada</span></td>
+            <td>Harina de trigo</td>
+            <td>LOT-0610</td>
+            <td>50 kg</td>
+            <td>Compra a Molinos del Sur</td>
+            <td>Bodega</td>
+          </tr>
+          <tr data-tipo="solicitud">
+            <td>06 jun 2026 09:30</td>
+            <td><span class="pp-badge pp-badge-info">Solicitud</span></td>
+            <td>Harina de trigo</td>
+            <td>LOT-0601</td>
+            <td>20 kg</td>
+            <td>Solicitud aprobada — Cocinero 1</td>
+            <td>Gerente</td>
+          </tr>
+          <tr data-tipo="salida">
+            <td>06 jun 2026 10:00</td>
+            <td><span class="pp-badge pp-badge-danger">Salida/merma</span></td>
+            <td>Levadura</td>
+            <td>LOT-0530</td>
+            <td>1 kg</td>
+            <td>Merma identificada</td>
+            <td>Bodega</td>
+          </tr>
+          <tr data-tipo="entrada">
+            <td>05 jun 2026 17:00</td>
+            <td><span class="pp-badge pp-badge-success">Entrada</span></td>
+            <td>Azúcar blanca</td>
+            <td>LOT-0505</td>
+            <td>25 kg</td>
+            <td>Compra a Distribuidora Norte</td>
+            <td>Bodega</td>
+          </tr>
+          <tr data-tipo="salida">
+            <td>05 jun 2026 11:20</td>
+            <td><span class="pp-badge pp-badge-danger">Salida/producción</span></td>
+            <td>Mantequilla</td>
+            <td>LOT-0528</td>
+            <td>3 bloques</td>
+            <td>Uso en producción</td>
+            <td>Pastelero</td>
+          </tr>
+          <tr data-tipo="solicitud">
+            <td>05 jun 2026 08:45</td>
+            <td><span class="pp-badge pp-badge-neutral">Solicitud rechazada</span></td>
+            <td>Frutas frescas</td>
+            <td>—</td>
+            <td>8 kg</td>
+            <td>Rechazada — stock insuficiente</td>
+            <td>Gerente</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<script>
+  function filtrarHistorial() {
+    const tipo    = document.getElementById("filtro-tipo").value.toLowerCase();
+    const texto   = document.getElementById("search-historial").value.toLowerCase();
+    const usuario = document.getElementById("filtro-usuario").value.toLowerCase();
+    document.querySelectorAll("#tabla-historial tbody tr").forEach(row => {
+      const rowTipo = row.dataset.tipo || "";
+      const rowText = row.textContent.toLowerCase();
+      const okT = !tipo    || rowTipo.includes(tipo);
+      const okQ = !texto   || rowText.includes(texto);
+      const okU = !usuario || rowText.includes(usuario);
+      row.style.display = (okT && okQ && okU) ? "" : "none";
+    });
+  }
+  ["filtro-tipo","search-historial","filtro-usuario"].forEach(id =>
+    document.getElementById(id).addEventListener("input", filtrarHistorial)
+  );
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/parvipan.js"></script>
+</body>
+</html>

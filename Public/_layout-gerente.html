@@ -1,0 +1,62 @@
+<!--
+  _layout-gerente.html
+  Fragmento de referencia: topbar + sidebar para el rol GERENTE.
+  En PHP este fragmento se incluye con: <?php include 'views/partials/layout-gerente.php'; ?>
+  Para la plantilla HTML pura se copia en cada vista.
+-->
+
+<!-- ===== TOPBAR ===== -->
+<header class="pp-topbar">
+  <button id="pp-sidebar-toggle" class="d-md-none pp-btn pp-btn-secondary" style="padding:6px 10px" aria-label="Menú">
+    <i class="ti ti-menu-2" aria-hidden="true"></i>
+  </button>
+
+  <a href="dashboard-gerencial.html" class="pp-topbar-brand">
+    <div class="pp-logo"><i class="ti ti-bread" aria-hidden="true"></i></div>
+    ParviPan
+  </a>
+
+  <div class="pp-topbar-right">
+    <!-- Alertas activas -->
+    <button class="pp-btn pp-btn-secondary" style="padding:6px 10px;position:relative" aria-label="Alertas">
+      <i class="ti ti-bell" style="font-size:18px" aria-hidden="true"></i>
+      <span style="position:absolute;top:4px;right:4px;width:8px;height:8px;border-radius:50%;background:var(--pp-red);border:2px solid white"></span>
+    </button>
+
+    <div class="pp-user-chip">
+      <div class="pp-avatar">LG</div>
+      <span>Laura Gerente</span>
+      <span class="pp-role pp-role-gerente" style="margin-left:2px">Gerente</span>
+    </div>
+
+    <button class="pp-btn pp-btn-secondary pp-btn-sm" data-action="logout">
+      <i class="ti ti-logout" aria-hidden="true"></i> Salir
+    </button>
+  </div>
+</header>
+
+<!-- ===== SIDEBAR GERENTE ===== -->
+<nav class="pp-sidebar" aria-label="Menú principal">
+  <a href="dashboard-gerencial.html" class="pp-nav-link" id="nav-resumen">
+    <i class="ti ti-chart-bar" aria-hidden="true"></i> Resumen
+  </a>
+  <a href="gestion-solicitudes.html" class="pp-nav-link" id="nav-solicitudes">
+    <i class="ti ti-clipboard-check" aria-hidden="true"></i> Solicitudes
+    <span class="pp-badge pp-badge-warning ms-auto" id="badge-pendientes">4</span>
+  </a>
+  <a href="historial.html" class="pp-nav-link" id="nav-historial">
+    <i class="ti ti-history" aria-hidden="true"></i> Historial
+  </a>
+  <a href="proveedores.html" class="pp-nav-link" id="nav-proveedores">
+    <i class="ti ti-truck" aria-hidden="true"></i> Proveedores
+  </a>
+  <a href="usuarios.html" class="pp-nav-link" id="nav-usuarios">
+    <i class="ti ti-users" aria-hidden="true"></i> Usuarios
+  </a>
+
+  <div class="pp-sidebar-footer">
+    <button class="pp-nav-link w-100" data-action="logout">
+      <i class="ti ti-logout" aria-hidden="true"></i> Cerrar sesión
+    </button>
+  </div>
+</nav>
