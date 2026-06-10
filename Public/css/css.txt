@@ -1,1 +1,3 @@
 css
+Estilos CSS del proyecto.
+- `parvipan.css`: reglas de diseño e interfaz para la aplicación.

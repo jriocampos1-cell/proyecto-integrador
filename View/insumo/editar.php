@@ -1,5 +1,6 @@
 <?php
 $titulo = 'Editar insumo';
+$insumo = $insumo ?? null;
 ob_start();
 ?>
 <div class="row mb-4">

@@ -1,1 +1,4 @@
 Model
+Modelos de datos que realizan consultas SQL y devuelven resultados al controlador.
+- `AlertaModel.php`, `DetalleSolitudModel.php`, `InsumoModel.php`, `LoteModel.php`, `MovimientoModel.php`, `ProveedorModel.php`, `SolicitudModel.php`, `UsuarioModel.php`.
+- Contiene lógica de acceso a tablas, vistas de base de datos y llamadas a procedimientos almacenados.

@@ -1,1 +1,3 @@
 img
+Recursos de imagen del proyecto.
+- Contiene los archivos usados en la interfaz y las páginas públicas.

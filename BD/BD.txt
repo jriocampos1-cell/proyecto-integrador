@@ -1,1 +1,3 @@
 BD
+Base de datos del sistema.
+- `parvin 2.0.sql`: script que crea la base de datos Gestionpanaderia, tablas, relaciones, índices, vistas, triggers, funciones, procedimientos almacenados y datos de ejemplo.

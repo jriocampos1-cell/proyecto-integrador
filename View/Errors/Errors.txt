@@ -1,1 +1,3 @@
 Errors
+Páginas de error y plantillas para manejar mensajes de fallo.
+- Contiene vistas que se muestran cuando ocurre un error o no se encuentra una ruta válida.

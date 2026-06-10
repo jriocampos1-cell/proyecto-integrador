@@ -1,5 +1,6 @@
 <?php
 $titulo = 'Editar proveedor';
+$proveedor = $proveedor ?? null;
 ob_start();
 ?>
 <div class="row mb-4">

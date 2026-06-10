@@ -1,5 +1,15 @@
 <?php
 $titulo = 'Dashboard';
+$usuarios = $usuarios ?? [];
+$insumos = $insumos ?? [];
+$proveedores = $proveedores ?? [];
+$lotes = $lotes ?? [];
+$movimientos = $movimientos ?? [];
+$solicitudes = $solicitudes ?? [];
+$alertas_activas = $alertas_activas ?? [];
+$top_semaforo = $top_semaforo ?? [];
+$top_vencimiento = $top_vencimiento ?? [];
+$top_mermas = $top_mermas ?? [];
 ob_start();
 ?>
 <div class="row mb-4">

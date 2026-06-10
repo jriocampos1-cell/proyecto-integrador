@@ -58,7 +58,7 @@ class InsumoController {
             $eUnidad    = trim($_POST["eUnidad"]);
             $nStockMinimo  = trim($_POST["nStockMinimo"]);
 
-            $insumo = new Insumo(null, $cNombre, $cCategoria, $eUnidad, $nStockMinimo);
+            $insumo = new Insumo(null, $cNombre, $cCategoria, $eUnidad, 0, $nStockMinimo);
 
             $rta = $this->modelo_insumo->create($insumo);
 
@@ -89,7 +89,7 @@ class InsumoController {
             $eUnidad    = trim($_POST["eUnidad"]);
             $nStockMinimo  = trim($_POST["nStockMinimo"]);
 
-            $insumo = new Insumo($id, $cNombre, $cCategoria, $eUnidad, $nStockMinimo);
+            $insumo = new Insumo($id, $cNombre, $cCategoria, $eUnidad, 0, $nStockMinimo);
 
             $rta = $this->modelo_insumo->update($insumo);
 

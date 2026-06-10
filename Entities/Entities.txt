@@ -1,1 +1,3 @@
 Entities
+Clases de entidad que representan las tablas del dominio.
+- Incluye `Alerta.php`, `DetalleSolicitud.php`, `Insumo.php`, `Lote.php`, `Movimiento.php`, `Proveedor.php`, `Solicitud.php`, `Usuario.php`.

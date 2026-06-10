@@ -1,1 +1,3 @@
 View
+Vistas dinámicas que muestran datos del controlador usando plantillas PHP.
+- Incluye páginas y subcarpetas para alertas, insumos, lotes, movimientos, proveedores, solicitudes, usuarios y dashboards.

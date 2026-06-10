@@ -1,5 +1,6 @@
 <?php
 $titulo = 'Editar usuario';
+$usuario = $usuario ?? null;
 ob_start();
 ?>
 <div class="row mb-4">
