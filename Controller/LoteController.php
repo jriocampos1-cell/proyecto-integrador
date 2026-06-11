@@ -1,6 +1,6 @@
 <?php
-require_once 'Entities/Lote.php';
-require_once 'Model/LoteModel.php';
+require_once __DIR__ . '/../Entities/Lote.php';
+require_once __DIR__ . '/../Model/LoteModel.php';
 
 class LoteController {
 
@@ -12,22 +12,22 @@ class LoteController {
 
     // GET
     public function inicio() {
-        $lista_lotes = $this->modelo_lote->findAll();
-        require_once "View/lote/lista.php";
+        $lotes = $this->modelo_lote->findAllView();
+        require_once __DIR__ . '/../View/lote/lista.php';
     }
 
     public function nuevo() {
-        require_once "View/lote/nuevo.php";
+        require_once __DIR__ . '/../View/lote/nuevo.php';
     }
 
     public function detalle($id) {
-        $lote = $this->modelo_lote->findById($id);
-        require_once "View/lote/detalle.php";
+        $lote = $this->modelo_lote->findByIdView($id);
+        require_once __DIR__ . '/../View/lote/detalle.php';
     }
 
     public function porInsumo($insumoID) {
         $lista_lotes = $this->modelo_lote->findByInsumoId($insumoID);
-        require_once "View/lote/lista.php";
+        require_once __DIR__ . '/../View/lote/lista.php';
     }
 
     // POST

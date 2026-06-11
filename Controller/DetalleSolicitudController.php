@@ -1,6 +1,6 @@
 <?php
-require_once 'Entities/DetalleSolicitud.php';
-require_once 'Model/DetalleSolicitudModel.php';
+require_once __DIR__ . '/../Entities/DetalleSolicitud.php';
+require_once __DIR__ . '/../Model/DetalleSolicitudModel.php';
 
 class DetalleSolicitudController {
 
@@ -13,11 +13,11 @@ class DetalleSolicitudController {
     // GET
     public function porSolicitud($nSolicitudID) {
         $lista_detalles = $this->modelo_detalle->findBySolicitudId($nSolicitudID);
-        require_once "View/detalle_solicitud/lista.php";
+        require_once __DIR__ . '/../View/detalle_solicitud/lista.php';
     }
 
     public function nuevo() {
-        require_once "View/detalle_solicitud/nuevo.php";
+        require_once __DIR__ . '/../View/detalle_solicitud/nuevo.php';
     }
 
     // POST

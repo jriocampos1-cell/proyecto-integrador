@@ -1,1 +1,5 @@
 Controller
+Controladores que reciben peticiones, usan modelos y cargan vistas.
+- `DashboardController.php`: prepara datos para el dashboard.
+- `DetalleSolicitudController.php`: controla detalles de solicitudes.
+- `AlertaController.php`, `InsumoController.php`, `LoteController.php`, `MovimientoController.php`, `ProveedorController.php`, `SolicitudController.php`, `UsuarioController.php`: CRUD y presentación de datos para cada entidad.

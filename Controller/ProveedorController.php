@@ -1,6 +1,6 @@
 <?php
-require_once 'Entities/Proveedor.php';
-require_once 'Model/ProveedorModel.php';
+require_once __DIR__ . '/../Entities/Proveedor.php';
+require_once __DIR__ . '/../Model/ProveedorModel.php';
 
 class ProveedorController {
 
@@ -12,22 +12,22 @@ class ProveedorController {
 
     // GET
     public function inicio() {
-        $lista_proveedores = $this->modelo_proveedor->findAll();
-        require_once "View/proveedor/lista.php";
+        $proveedores = $this->modelo_proveedor->findAllView();
+        require_once __DIR__ . '/../View/proveedor/lista.php';
     }
 
     public function nuevo() {
-        require_once "View/proveedor/nuevo.php";
+        require_once __DIR__ . '/../View/proveedor/nuevo.php';
     }
 
     public function detalle($id) {
-        $proveedor = $this->modelo_proveedor->findById($id);
-        require_once "View/proveedor/detalle.php";
+        $proveedor = $this->modelo_proveedor->findByIdView($id);
+        require_once __DIR__ . '/../View/proveedor/detalle.php';
     }
 
     public function editar($id) {
-        $proveedor = $this->modelo_proveedor->findById($id);
-        require_once "View/proveedor/editar.php";
+        $proveedor = $this->modelo_proveedor->findByIdView($id);
+        require_once __DIR__ . '/../View/proveedor/editar.php';
     }
 
     // POST

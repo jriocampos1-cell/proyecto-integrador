@@ -1,6 +1,6 @@
 <?php
-require_once 'Entities/Insumo.php';
-require_once 'Model/InsumoModel.php';
+require_once __DIR__ . '/../Entities/Insumo.php';
+require_once __DIR__ . '/../Model/InsumoModel.php';
 
 class InsumoController {
 
@@ -12,37 +12,37 @@ class InsumoController {
 
     // GET
     public function inicio() {
-        $lista_insumos = $this->modelo_insumo->findAll();
-        require_once "View/insumo/lista.php";
+        $insumos = $this->modelo_insumo->findAllView();
+        require_once __DIR__ . '/../View/insumo/lista.php';
     }
 
     public function nuevo() {
-        require_once "View/insumo/nuevo.php";
+        require_once __DIR__ . '/../View/insumo/nuevo.php';
     }
 
     public function detalle($id) {
-        $insumo = $this->modelo_insumo->findById($id);
-        require_once "View/insumo/detalle.php";
+        $insumo = $this->modelo_insumo->findByIdView($id);
+        require_once __DIR__ . '/../View/insumo/detalle.php';
     }
 
     public function editar($id) {
-        $insumo = $this->modelo_insumo->findById($id);
-        require_once "View/insumo/editar.php";
+        $insumo = $this->modelo_insumo->findByIdView($id);
+        require_once __DIR__ . '/../View/insumo/editar.php';
     }
 
     public function semaforoStock() {
         $semaforo = $this->modelo_insumo->SemaforoStock();
-        require_once "View/insumo/semaforo.php";
+        require_once __DIR__ . '/../View/insumo/semaforo.php';
     }
 
     public function inventarioFEFO() {
         $inventario = $this->modelo_insumo->InventarioFEFO();
-        require_once "View/insumo/fefo.php";
+        require_once __DIR__ . '/../View/insumo/fefo.php';
     }
 
     public function analisisMermas() {
         $mermas = $this->modelo_insumo->AnalisisMermas();
-        require_once "View/insumo/mermas.php";
+        require_once __DIR__ . '/../View/insumo/mermas.php';
     }
 
     // POST
@@ -58,7 +58,7 @@ class InsumoController {
             $eUnidad    = trim($_POST["eUnidad"]);
             $nStockMinimo  = trim($_POST["nStockMinimo"]);
 
-            $insumo = new Insumo(null, $cNombre, $cCategoria, $eUnidad, $nStockMinimo);
+            $insumo = new Insumo(null, $cNombre, $cCategoria, $eUnidad, 0, $nStockMinimo);
 
             $rta = $this->modelo_insumo->create($insumo);
 
@@ -89,7 +89,7 @@ class InsumoController {
             $eUnidad    = trim($_POST["eUnidad"]);
             $nStockMinimo  = trim($_POST["nStockMinimo"]);
 
-            $insumo = new Insumo($id, $cNombre, $cCategoria, $eUnidad, $nStockMinimo);
+            $insumo = new Insumo($id, $cNombre, $cCategoria, $eUnidad, 0, $nStockMinimo);
 
             $rta = $this->modelo_insumo->update($insumo);
 

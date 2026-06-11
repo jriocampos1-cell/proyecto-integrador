@@ -1,1 +1,4 @@
 Core
+Núcleo de la aplicación.
+- `BaseDatos.php`: clase de conexión PDO a la base de datos.
+- `ti.php`: utilidades de tiempo/fecha usadas por el sistema.

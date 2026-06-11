@@ -1,6 +1,7 @@
 <?php
-require_once 'Entities/Solicitud.php';
-require_once 'Model/SolicitudModel.php';
+require_once __DIR__ . '/../Entities/Solicitud.php';
+require_once __DIR__ . '/../Model/SolicitudModel.php';
+require_once __DIR__ . '/../Model/DetalleSolicitudModel.php';
 
 class SolicitudController {
 
@@ -12,17 +13,19 @@ class SolicitudController {
 
     // GET
     public function inicio() {
-        $lista_solicitudes = $this->modelo_solicitud->findAll();
-        require_once "View/solicitud/lista.php";
+        $solicitudes = $this->modelo_solicitud->findAllView();
+        require_once __DIR__ . '/../View/solicitud/lista.php';
     }
 
     public function nuevo() {
-        require_once "View/solicitud/nuevo.php";
+        require_once __DIR__ . '/../View/solicitud/nuevo.php';
     }
 
     public function detalle($id) {
-        $solicitud = $this->modelo_solicitud->findById($id);
-        require_once "View/solicitud/detalle.php";
+        $solicitud = $this->modelo_solicitud->findByIdView($id);
+        $detalleModel = new DetalleSolicitudModel();
+        $detalles = $detalleModel->findBySolicitudIdView($id);
+        require_once __DIR__ . '/../View/solicitud/detalle.php';
     }
 
     // POST

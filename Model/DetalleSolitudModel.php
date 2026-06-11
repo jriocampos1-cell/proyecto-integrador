@@ -1,6 +1,6 @@
 <?php
-require_once "Core/BaseDatos.php";
-require_once "Entities/DetalleSolicitud.php";
+require_once __DIR__ . '/../Core/BaseDatos.php';
+require_once __DIR__ . '/../Entities/DetalleSolicitud.php';
 
 class DetalleSolicitudModel extends Conectar{
     public function __construct(){
@@ -24,7 +24,20 @@ class DetalleSolicitudModel extends Conectar{
         }
     }    
 
-    public function create(DetalleSolicitud $detalle){
+
+    public function findBySolicitudIdView($solicitudID){
+        try{
+            $sql = "SELECT d.nDetalleSolicitudID, i.cNombre AS cInsumo, d.nCantidad FROM TDetalleSolicitud d JOIN TInsumos i ON d.nInsumoID = i.nInsumoID WHERE d.nSolicitudID = :solicitudID";
+            $sentencia = $this->conexion->prepare($sql);
+            $sentencia->bindParam(':solicitudID', $solicitudID);
+            $sentencia->execute();
+            return $sentencia->fetchAll(PDO::FETCH_ASSOC);
+        }catch(Exception $e){
+            die($e->getMessage());
+        }
+    }
+
+        public function create(DetalleSolicitud $detalle){
         try{
             $sql = "INSERT INTO TDetalleSolicitud (nSolicitudID, nInsumoID, nCantidad) VALUES (:solicitudID, :insumoID, :cantidad)";
             $sentencia = $this->conexion->prepare($sql);    

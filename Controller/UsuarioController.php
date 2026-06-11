@@ -1,6 +1,6 @@
 <?php
-require_once 'Entities/Usuario.php';
-require_once 'Model/UsuarioModel.php';
+require_once __DIR__ . '/../Entities/Usuario.php';
+require_once __DIR__ . '/../Model/UsuarioModel.php';
 
 class UsuarioController {
 
@@ -12,22 +12,22 @@ class UsuarioController {
 
     // GET
     public function inicio() {
-        $lista_usuarios = $this->modelo_usuario->findAll();
-        require_once "View/usuario/lista.php";
+        $usuarios = $this->modelo_usuario->findAllView();
+        require_once __DIR__ . '/../View/usuario/lista.php';
     }
 
     public function nuevo() {
-        require_once "View/usuario/nuevo.php";
+        require_once __DIR__ . '/../View/usuario/nuevo.php';
     }
 
     public function detalle($id) {
-        $usuario = $this->modelo_usuario->findById($id);
-        require_once "View/usuario/detalle.php";
+        $usuario = $this->modelo_usuario->findByIdView($id);
+        require_once __DIR__ . '/../View/usuario/detalle.php';
     }
 
     public function editar($id) {
-        $usuario = $this->modelo_usuario->findById($id);
-        require_once "View/usuario/editar.php";
+        $usuario = $this->modelo_usuario->findByIdView($id);
+        require_once __DIR__ . '/../View/usuario/editar.php';
     }
 
     // POST

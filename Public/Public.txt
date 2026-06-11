@@ -1,0 +1,5 @@
+Public
+Recursos públicos y plantillas HTML.
+- `plantilla.html`: layout principal.
+- Vistas HTML estáticas para dashboards, login y gestión de entidades.
+- `css/`, `js/`, `img/` contienen estilos, scripts y recursos visuales.

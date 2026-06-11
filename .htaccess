@@ -1,0 +1,8 @@
+RewriteEngine On
+Options All -Indexes
+
+RewriteCond %{REQUEST_URI} !\.(css|js|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$ [NC]
+
+RewriteRule ^$ index.php [L]
+
+RewriteRule ^([a-zA-Z0-9ñÑ-]+)/?([a-zA-Z0-9ñÑ-]+)?/?([a-zA-Z0-9ñÑ-]+)?$ index.php?url=$1&accion=$2&id=$3 [QSA,L]

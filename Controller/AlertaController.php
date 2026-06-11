@@ -1,6 +1,6 @@
 <?php
-require_once 'Entities/Alerta.php';
-require_once 'Model/AlertaModel.php';
+require_once __DIR__ . '/../Entities/Alerta.php';
+require_once __DIR__ . '/../Model/AlertaModel.php';
 
 class AlertaController {
 
@@ -11,18 +11,23 @@ class AlertaController {
     }
 
     // GET
+    public function detalle($id) {
+        $alerta = $this->modelo_alerta->findByIdView($id);
+        require_once __DIR__ . '/../View/alerta/detalle.php';
+    }
+
     public function inicio() {
-        $lista_alertas = $this->modelo_alerta->findAll();
-        require_once "View/alerta/lista.php";
+        $alertas = $this->modelo_alerta->findAllView();
+        require_once __DIR__ . '/../View/alerta/lista.php';
     }
 
     public function activas() {
         $lista_alertas = $this->modelo_alerta->findActivas();
-        require_once "View/alerta/activas.php";
+        require_once __DIR__ . '/../View/alerta/activas.php';
     }
 
     public function nuevo() {
-        require_once "View/alerta/nuevo.php";
+        require_once __DIR__ . '/../View/alerta/nuevo.php';
     }
 
     // POST

@@ -1,6 +1,6 @@
 <?php
-require_once 'Entities/Movimiento.php';
-require_once 'Model/MovimientoModel.php';
+require_once __DIR__ . '/../Entities/Movimiento.php';
+require_once __DIR__ . '/../Model/MovimientoModel.php';
 
 class MovimientoController {
 
@@ -12,12 +12,17 @@ class MovimientoController {
 
     // GET
     public function inicio() {
-        $lista_movimientos = $this->modelo_movimiento->findAll();
-        require_once "View/movimiento/lista.php";
+        $movimientos = $this->modelo_movimiento->findAllView();
+        require_once __DIR__ . '/../View/movimiento/lista.php';
+    }
+
+    public function detalle($id) {
+        $movimiento = $this->modelo_movimiento->findByIdView($id);
+        require_once __DIR__ . '/../View/movimiento/detalle.php';
     }
 
     public function nuevo() {
-        require_once "View/movimiento/nuevo.php";
+        require_once __DIR__ . '/../View/movimiento/nuevo.php';
     }
 
     // POST

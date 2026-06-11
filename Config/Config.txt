@@ -1,1 +1,4 @@
 Config
+Configuración global del proyecto.
+- `config.php`: define BASE_URL, APP_NAME y credenciales MySQL.
+Usar este archivo para ajustar la conexión a la base de datos.
