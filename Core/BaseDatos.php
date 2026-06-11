@@ -1,5 +1,5 @@
 <?php
-    require_once "config/config.php";
+    require_once __DIR__ . '/../Config/config.php';
     class Conectar{
         protected  $conexion;
 

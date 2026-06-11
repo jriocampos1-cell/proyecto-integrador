@@ -108,5 +108,44 @@ class UsuarioModel extends Conectar{
     } catch(Exception $e) {
         die($e->getMessage());
     }
-}
+    }
+    // Autenticación flexible: busca por nombre, username, o coincidencia parcial
+    public function authenticate($cNombre, $cCedula){
+        try{
+            // Buscar por nombre exacto, username exacto, o nombre que contenga el texto
+            $sql = "SELECT * FROM TUsuarios WHERE (cNombre = :nombre OR cNombreUsuario = :nombre OR cNombre LIKE :likeNombre) AND cContraseñaUsuario = :pass AND eEstado = 'activo' LIMIT 1";
+            $like = '%' . $cNombre . '%';
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->bindParam(':nombre', $cNombre);
+            $stmt->bindParam(':likeNombre', $like);
+            $stmt->bindParam(':pass', $cCedula);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if($row){
+                return new Usuario($row['nUsuarioID'], $row['cNombre'], $row['cNombreUsuario'], $row['cContraseñaUsuario'], $row['eRol'], $row['eEstado'], $row['cCorreo']);
+            }
+            return null;
+        }catch(Exception $e){
+            die($e->getMessage());
+        }
+    }
+
+    // Autenticación por nombre de usuario (compatibilidad)
+    public function authenticateByUsername($cNombreUsuario, $cCedula){
+        try{
+            $sql = "SELECT * FROM TUsuarios WHERE cNombreUsuario = :user AND cContraseñaUsuario = :pass AND eEstado = 'activo'";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->bindParam(':user', $cNombreUsuario);
+            $stmt->bindParam(':pass', $cCedula);
+            $stmt->execute();
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if($row){
+                return new Usuario($row['nUsuarioID'], $row['cNombre'], $row['cNombreUsuario'], $row['cContraseñaUsuario'], $row['eRol'], $row['eEstado'], $row['cCorreo']);
+            }
+            return null;
+        }catch(Exception $e){
+            die($e->getMessage());
+        }
+    }
+
 }

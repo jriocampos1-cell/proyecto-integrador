@@ -24,6 +24,18 @@ foreach ($parts as $part) {
 $controlador .= 'Controller';
 $ruta = "Controller/" . $controlador . ".php";
 
+// Protección simple: si no hay sesión de usuario activa, forzar la vista de login
+// Permitimos que se acceda a las acciones de registro/login sin autenticación
+if (!isset($_SESSION['user'])) {
+    $publicController = 'UsuarioController';
+    $publicActions = ['login', 'authenticate', 'createUsuario'];
+    if (!($controlador === $publicController && in_array($accion, $publicActions))) {
+        // Forzamos a mostrar el login
+        $controlador = $publicController;
+        $ruta = "Controller/" . $controlador . ".php";
+        $accion = 'login';
+    }
+}
 if (file_exists($ruta)) {
 
     require_once $ruta;
