@@ -1,3 +1,4 @@
+<?php
 $titulo = 'Lista de usuarios';
 ob_start();
 ?>

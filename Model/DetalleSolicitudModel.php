@@ -49,4 +49,19 @@ class DetalleSolicitudModel extends Conectar {
             die($e->getMessage());
         }
     }
+
+    // Método simplificado para crear desde el controlador
+    public function createSimple($solicitudID, $insumoID, $cantidad) {
+        try {
+            $sql = "INSERT INTO TDetalleSolicitud (nSolicitudID, nInsumoID, nCantidad) VALUES (:s, :i, :c)";
+            $sentencia = $this->conexion->prepare($sql);
+            $sentencia->bindValue(':s', $solicitudID);
+            $sentencia->bindValue(':i', $insumoID);
+            $sentencia->bindValue(':c', $cantidad);
+            $sentencia->execute();
+            return $this->conexion->lastInsertId();
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
 }

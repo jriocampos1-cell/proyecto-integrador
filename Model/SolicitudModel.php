@@ -88,4 +88,42 @@ class SolicitudModel extends Conectar{
             die($e->getMessage());
         }
     }
+
+    public function findPendientes(){
+        try{
+            $sql = "SELECT s.nSolicitudID, u.cNombre AS cUsuario, s.eEstado, s.dFecha FROM TSolicitud s LEFT JOIN TUsuarios u ON s.nUsuarioID = u.nUsuarioID WHERE s.eEstado = 'pendiente' ORDER BY s.dFecha DESC";
+            $consulta = $this->conexion->prepare($sql);
+            $consulta->execute();
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        }catch(Exception $e){
+            die($e->getMessage());
+        }
+    }
+
+    public function findByUsuarioView($usuarioID){
+        try{
+            $sql = "SELECT s.nSolicitudID, s.eEstado, s.cMotivoRechazo, s.dFecha, 
+            (SELECT GROUP_CONCAT(CONCAT(d.nCantidad, ' ', i.eUnidadMedida, ' de ', i.cNombre) SEPARATOR ', ')
+             FROM TDetalleSolicitud d JOIN TInsumos i ON d.nInsumoID = i.nInsumoID WHERE d.nSolicitudID = s.nSolicitudID) AS cDetalles
+            FROM TSolicitud s WHERE s.nUsuarioID = :usuarioID ORDER BY s.dFecha DESC";
+            $sentencia = $this->conexion->prepare($sql);
+            $sentencia->bindParam(':usuarioID', $usuarioID);
+            $sentencia->execute();
+            return $sentencia->fetchAll(PDO::FETCH_ASSOC);
+        }catch(Exception $e){
+            die($e->getMessage());
+        }
+    }
+
+    public function rechazar($solicitudID, $motivo){
+        try{
+            $sql = "UPDATE TSolicitud SET eEstado = 'rechazada', cMotivoRechazo = :motivo WHERE nSolicitudID = :id";
+            $sentencia = $this->conexion->prepare($sql);
+            $sentencia->bindValue(':motivo', $motivo);
+            $sentencia->bindValue(':id', $solicitudID);
+            return $sentencia->execute();
+        }catch(Exception $e){
+            die($e->getMessage());
+        }
+    }
 }

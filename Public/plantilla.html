@@ -5,26 +5,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($titulo ?? APP_NAME); ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css"/>
+    <style>
+        :root {
+            --pp-primary: #8B5E3C;
+            --pp-dark: #2C3E50;
+            --pp-warning: #F4B400;
+            --pp-bg: #FAF7F2;
+            --pp-border: #E8DCCF;
+        }
+        body {
+            background: var(--pp-bg);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+        }
+        .navbar-dark.bg-primary { background-color: var(--pp-dark) !important; }
+        .navbar-brand { font-weight: 700; color: #fff !important; }
+        .nav-link { color: rgba(255,255,255,.85) !important; font-weight: 500; }
+        .nav-link:hover { color: #fff !important; }
+        .nav-link.active { color: var(--pp-warning) !important; }
+        .user-chip {
+            display: flex; align-items: center; gap: 8px;
+            background: rgba(255,255,255,.15); border-radius: 50px;
+            padding: 4px 16px 4px 4px; color: #fff;
+        }
+        .user-avatar {
+            width: 32px; height: 32px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 13px; flex-shrink: 0;
+        }
+        .role-badge {
+            font-size: 11px; padding: 2px 8px; border-radius: 12px;
+            font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .role-gerente { background: #F4B400; color: #5D4037; }
+        .role-cocinero { background: #E74C3C; color: #fff; }
+        .role-pastelero { background: #E91E63; color: #fff; }
+        .role-bodega { background: #3498DB; color: #fff; }
+        .card { border: 1px solid var(--pp-border); border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.04); }
+        .card-title { font-weight: 700; color: var(--pp-dark); }
+        .display-6 { font-size: 2rem; font-weight: 700; color: var(--pp-primary); }
+    </style>
 </head>
 <body>
+<?php
+$accion_actual = $accion_actual ?? '';
+$rol = $_SESSION['user']['rol'] ?? null;
+$nombre = $_SESSION['user']['nombre'] ?? 'Usuario';
+$iniciales = '';
+$partes = explode(' ', $nombre);
+foreach ($partes as $p) {
+    if (strlen($p) > 0) $iniciales .= strtoupper($p[0]);
+}
+$iniciales = substr($iniciales, 0, 2);
+?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="<?php echo BASE_URL; ?>"><?php echo htmlspecialchars(APP_NAME); ?></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="<?php echo BASE_URL; ?>">
+            <i class="ti ti-bread" style="vertical-align:-2px"></i> <?php echo htmlspecialchars(APP_NAME); ?>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="<?php echo BASE_URL; ?>">Inicio</a></li>
-                <li class="nav-item"><a class="nav-link" href="<?php echo BASE_URL; ?>/View/dashboard.php">Dashboard</a></li>
-                <li class="nav-item"><a class="nav-link" href="<?php echo BASE_URL; ?>/View/usuarios.php">Usuarios</a></li>
-                <li class="nav-item"><a class="nav-link" href="<?php echo BASE_URL; ?>/View/insumos.php">Insumos</a></li>
-                <li class="nav-item"><a class="nav-link" href="<?php echo BASE_URL; ?>/View/proveedores.php">Proveedores</a></li>
-                <li class="nav-item"><a class="nav-link" href="<?php echo BASE_URL; ?>/View/lotes.php">Lotes</a></li>
-                <li class="nav-item"><a class="nav-link" href="<?php echo BASE_URL; ?>/View/movimientos.php">Movimientos</a></li>
-                <li class="nav-item"><a class="nav-link" href="<?php echo BASE_URL; ?>/View/solicitudes.php">Solicitudes</a></li>
-                <li class="nav-item"><a class="nav-link" href="<?php echo BASE_URL; ?>/View/alertas.php">Alertas</a></li>
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link <?php echo $accion_actual == 'inicio' ? 'active' : ''; ?>" href="<?php echo BASE_URL; ?>dashboard/inicio">
+                        <i class="ti ti-home"></i> Inicio
+                    </a>
+                </li>
+
+                <?php if (in_array($rol, ['cocinero', 'pastelero'])): ?>
+                <li class="nav-item"><a class="nav-link" href="<?php echo BASE_URL; ?>solicitud/nuevo"><i class="ti ti-plus"></i> Pedir insumos</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?php echo BASE_URL; ?>solicitud/inicio"><i class="ti ti-clipboard-list"></i> Mis solicitudes</a></li>
+                <?php endif; ?>
+
+                <?php if (in_array($rol, ['gerente', 'bodega'])): ?>
+                <li class="nav-item"><a class="nav-link" href="<?php echo BASE_URL; ?>solicitud/inicio"><i class="ti ti-clipboard-check"></i> Gestionar solicitudes</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?php echo BASE_URL; ?>insumo/inicio"><i class="ti ti-package"></i> Insumos</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?php echo BASE_URL; ?>lote/inicio"><i class="ti ti-box"></i> Lotes</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?php echo BASE_URL; ?>proveedor/inicio"><i class="ti ti-truck"></i> Proveedores</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?php echo BASE_URL; ?>alerta/inicio"><i class="ti ti-bell"></i> Alertas</a></li>
+                <?php endif; ?>
+
+                <?php if ($rol == 'gerente'): ?>
+                <li class="nav-item"><a class="nav-link" href="<?php echo BASE_URL; ?>usuario/inicio"><i class="ti ti-users"></i> Usuarios</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?php echo BASE_URL; ?>movimiento/inicio"><i class="ti ti-arrows-exchange"></i> Movimientos</a></li>
+                <?php endif; ?>
             </ul>
+            <div class="d-flex align-items-center gap-3">
+                <?php if (isset($_SESSION['user'])): ?>
+                <div class="user-chip">
+                    <div class="user-avatar" style="background:<?php echo $rol == 'gerente' ? '#F4B400' : ($rol == 'cocinero' ? '#E74C3C' : ($rol == 'pastelero' ? '#E91E63' : '#3498DB')); ?>">
+                        <?php echo $iniciales; ?>
+                    </div>
+                    <span style="font-weight:600"><?php echo htmlspecialchars($nombre); ?></span>
+                    <span class="role-badge role-<?php echo $rol; ?>"><?php echo htmlspecialchars($rol); ?></span>
+                </div>
+                <a href="<?php echo BASE_URL; ?>usuario/logout" class="btn btn-outline-light btn-sm"><i class="ti ti-logout"></i> Salir</a>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 </nav>

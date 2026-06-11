@@ -33,6 +33,17 @@ class AlertaModel extends Conectar {
         }
     }
 
+    public function findActivasView() {
+        try {
+            $sql = "SELECT a.nAlertaID, i.cNombre AS cInsumo, a.eTipo, a.cMensaje, a.eEstado, a.dFecha FROM TAlerta a LEFT JOIN TInsumos i ON a.nInsumoID = i.nInsumoID WHERE a.eEstado = 'activa' ORDER BY a.dFecha DESC";
+            $consulta = $this->conexion->prepare($sql);
+            $consulta->execute();
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
    
     public function findAll() {
         try {

@@ -16,6 +16,63 @@ class UsuarioController {
         require_once __DIR__ . '/../View/usuario/lista.php';
     }
 
+    public function login() {
+        require_once __DIR__ . '/../View/usuario/login.php';
+    }
+
+    // POST: procesa autenticación
+    public function authenticate() {
+        if (isset($_POST['cNombre']) && isset($_POST['cCedula'])) {
+            $nombre = trim($_POST['cNombre']);
+            $cedula = trim($_POST['cCedula']);
+            // Primero intenta autenticar por nombre de persona, luego por username (compatibilidad)
+            $usuario = $this->modelo_usuario->authenticate($nombre, $cedula);
+            if (!$usuario) {
+                $usuario = $this->modelo_usuario->authenticateByUsername($nombre, $cedula);
+            }
+            if ($usuario) {
+                // Iniciar sesión y guardar datos esenciales
+                $_SESSION['user'] = [
+                    'id' => $usuario->getNUsuarioID(),
+                    'nombre' => $usuario->getCNombre(),
+                    'usuario' => $usuario->getCNombreUsuario(),
+                    'rol' => $usuario->getERol()
+                ];
+                // Redirigir al dashboard según el rol
+                $rol = $usuario->getERol();
+                switch ($rol) {
+                    case 'gerente':
+                        header('Location: ' . BASE_URL . 'dashboard/gerencia');
+                        break;
+                    case 'bodega':
+                        header('Location: ' . BASE_URL . 'dashboard/bodega');
+                        break;
+                    case 'cocinero':
+                    case 'pastelero':
+                        header('Location: ' . BASE_URL . 'dashboard/cocina');
+                        break;
+                    default:
+                        header('Location: ' . BASE_URL . 'dashboard/inicio');
+                }
+                exit();
+            } else {
+                $_SESSION['msg'] = 'Nombre o cédula inválidos';
+                $_SESSION['tipo'] = 'danger';
+                header('Location: ' . BASE_URL . 'usuario/login');
+                exit();
+            }
+        } else {
+            echo 'Datos incompletos';
+        }
+    }
+
+    public function logout() {
+        unset($_SESSION['user']);
+        session_destroy();
+        header('Location: ' . BASE_URL . 'usuario/login');
+        exit();
+    }
+
     public function nuevo() {
         require_once __DIR__ . '/../View/usuario/nuevo.php';
     }
