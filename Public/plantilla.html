@@ -61,9 +61,15 @@ $iniciales = substr($iniciales, 0, 2);
 ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="<?php echo BASE_URL; ?>">
+        <?php if ($rol == 'gerente'): ?>
+        <a class="navbar-brand" href="<?php echo BASE_URL; ?>dashboard/inicio" title="Dashboard completo">
             <i class="ti ti-bread" style="vertical-align:-2px"></i> <?php echo htmlspecialchars(APP_NAME); ?>
         </a>
+        <?php else: ?>
+        <span class="navbar-brand" style="cursor:default">
+            <i class="ti ti-bread" style="vertical-align:-2px"></i> <?php echo htmlspecialchars(APP_NAME); ?>
+        </span>
+        <?php endif; ?>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>

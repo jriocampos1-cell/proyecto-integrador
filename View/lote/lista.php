@@ -1,3 +1,4 @@
+<?php
 $titulo = 'Inventario de lotes';
 ob_start();
 ?>

@@ -1,3 +1,4 @@
+<?php
 $titulo = 'Detalle de usuario';
 ob_start();
 ?>

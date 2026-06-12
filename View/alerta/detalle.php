@@ -1,3 +1,4 @@
+<?php
 $titulo = 'Detalle de alerta';
 ob_start();
 ?>

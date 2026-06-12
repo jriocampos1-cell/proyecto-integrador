@@ -1,3 +1,4 @@
+<?php
 $titulo = 'Semáforo de stock';
 ob_start();
 ?>

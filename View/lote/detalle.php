@@ -1,3 +1,4 @@
+<?php
 $titulo = 'Detalle de lote';
 ob_start();
 ?>

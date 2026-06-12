@@ -1,4 +1,6 @@
+<?php
 $titulo = 'Lista de insumos';
+$accion_actual = 'insumos';
 ob_start();
 ?>
 <div class="row mb-4">

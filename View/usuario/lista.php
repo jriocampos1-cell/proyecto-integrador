@@ -5,10 +5,14 @@ ob_start();
 <div class="row mb-4">
     <div class="col-md-9">
         <h1>Lista de usuarios</h1>
-        <p class="text-muted">Listado de usuarios registrados en el sistema.</p>
+        <p class="text-muted">Listado de empleados registrados en el sistema.</p>
     </div>
     <div class="col-md-3 text-end align-self-center">
-        <a class="btn btn-sm btn-info" href="<?php echo BASE_URL; ?>/View/usuario_nuevo.php">Nuevo usuario</a>
+        <?php if (($_SESSION['user']['rol'] ?? '') === 'gerente'): ?>
+        <a class="btn btn-warning fw-bold" href="<?php echo BASE_URL; ?>usuario/nuevo">
+            <i class="ti ti-user-plus"></i> Nuevo usuario
+        </a>
+        <?php endif; ?>
     </div>
 </div>
 <div class="row">

@@ -1,3 +1,4 @@
+<?php
 $titulo = 'Detalle de movimiento';
 ob_start();
 ?>

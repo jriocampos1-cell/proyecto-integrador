@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../Controller/SolicitudController.php';
-$controller = new SolicitudController();
-$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-$controller->detalle($id);
+// Redirigir al front controller para usar la nueva vista en View/solicitud/detalle.php
+$id = $_GET['id'] ?? 0;
+header('Location: ' . BASE_URL . 'solicitud/detalle/' . $id);
+exit();
