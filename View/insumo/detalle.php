@@ -1,3 +1,4 @@
+<?php
 $titulo = 'Detalle de insumo';
 ob_start();
 ?>

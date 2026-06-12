@@ -1,3 +1,4 @@
+<?php
 $titulo = 'Registro de movimientos';
 ob_start();
 ?>

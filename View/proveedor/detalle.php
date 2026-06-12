@@ -1,3 +1,4 @@
+<?php
 $titulo = 'Detalle de proveedor';
 ob_start();
 ?>

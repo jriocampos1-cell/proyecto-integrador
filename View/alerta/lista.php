@@ -1,4 +1,6 @@
+<?php
 $titulo = 'Alertas';
+$accion_actual = 'alertas';
 ob_start();
 ?>
 <div class="row mb-4">

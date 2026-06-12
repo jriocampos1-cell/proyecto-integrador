@@ -74,6 +74,14 @@ class UsuarioController {
     }
 
     public function nuevo() {
+        // Solo gerente puede registrar nuevos usuarios
+        $rol = $_SESSION['user']['rol'] ?? '';
+        if ($rol !== 'gerente') {
+            $_SESSION['msg'] = 'No tienes permisos para crear usuarios.';
+            $_SESSION['tipo'] = 'danger';
+            header('Location: ' . BASE_URL . 'dashboard/inicio');
+            exit();
+        }
         require_once __DIR__ . '/../View/usuario/nuevo.php';
     }
 

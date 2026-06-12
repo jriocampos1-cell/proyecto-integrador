@@ -13,7 +13,7 @@ ob_start();
 
 <div class="row mb-4">
     <div class="col-md-8">
-        <h1 class="mb-1">👨‍🍳 Panel de <?php echo $rol_label; ?></h1>
+        <h1 class="mb-1"> Panel de <?php echo $rol_label; ?></h1>
         <p class="text-muted">Solicita materias primas según las necesidades de producción.</p>
     </div>
     <div class="col-md-4 text-end">

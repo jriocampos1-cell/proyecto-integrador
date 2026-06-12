@@ -1,3 +1,4 @@
+<?php
 $titulo = 'Inventario FEFO';
 ob_start();
 ?>

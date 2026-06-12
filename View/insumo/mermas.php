@@ -1,3 +1,4 @@
+<?php
 $titulo = 'Análisis de mermas';
 ob_start();
 ?>
